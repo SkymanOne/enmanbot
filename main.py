@@ -9,10 +9,10 @@ bot = telebot.TeleBot(token)  # token file ignored
 @bot.message_handler(func=lambda message: message.text == 'Главное меню✅')
 def start(message: types.Message):
     markup = types.ReplyKeyboardMarkup()
-    markup.row('Расписание⏱', 'Конакты📞')
+    markup.row('Расписание⏱', 'Контакты📞')
     markup.row('Справки📝', 'FAQ💡')
     bot.send_message(message.from_user.id,
-                     'Приветствую тебя, что будем делать?',
+                     'Приветствую, что тебя интересует?',
                      reply_markup=markup)
 
 
@@ -26,7 +26,7 @@ def schedule(message: types.Message):
                      reply_markup=markup)
 
 
-@bot.message_handler(func=lambda message: message.text == 'Конакты📞')
+@bot.message_handler(func=lambda message: message.text == 'Контакты📞')
 def contacts(message: types.Message):
     markup = types.ReplyKeyboardMarkup()
     markup.row('Деканат', 'Преподаватели')
@@ -41,7 +41,7 @@ def deanery(message: types.Message):
     markup = types.ReplyKeyboardMarkup()
     markup.row('Серебреннико', 'Харитонов', 'Стуловский')
     markup.row('Мильчаков', 'Мурзагареев', 'Максименкова')
-    markup.row('Алексеева', 'Фролова')
+    markup.row('Алексеева', 'Фролова', 'Контакты📞')
     bot.send_message(message.from_user.id, 'Список деканата',
                      reply_markup=markup)
 
@@ -52,7 +52,18 @@ def teachers(message: types.Message):
     markup.row('Математика', 'Психология')
     markup.row('Философия', 'Экономическая теория')
     markup.row('Менеджмент', 'История', 'Английский')
+    markup.row('Контакты📞')
     bot.send_message(message.from_user.id, 'Выбери предмет',
+                     reply_markup=markup)
+
+
+@bot.message_handler(func=lambda message: message.text == 'Справки📝')
+def references(message: types.Message):
+    markup = types.ReplyKeyboardMarkup()
+    markup.row('Заказать справку')
+    markup.row('Справка об обучени')
+    markup.row('Главное меню✅')
+    bot.send_message(message.from_user.id, 'Доступные справки',
                      reply_markup=markup)
 
 
@@ -66,9 +77,27 @@ def faq(message: types.Message):
                      reply_markup=markup)
 
 
+@bot.message_handler(func=lambda message: message.text == 'Для студента')
+def for_student(message: types.Message):
+    markup = types.ReplyKeyboardMarkup()
+    markup.row('Как сделать справку для военкомата')
+    markup.row('FAQ💡')
+    bot.send_message(message.from_user.id, 'Вот руководства для студента',
+                     reply_markup=markup)
+
+
+@bot.message_handler(func=lambda message: message.text == 'Для абитуриента')
+def for_student(message: types.Message):
+    markup = types.ReplyKeyboardMarkup()
+    markup.row('Какие документы нужны для поступления', 'Проходные баллы')
+    markup.row('Какие предметы сдавать', 'FAQ💡')
+    bot.send_message(message.from_user.id, 'Вот руководства для студента',
+                     reply_markup=markup)
+
+
 @bot.message_handler(content_types=['text'])
 def echo_mes(message: types.Message):
-    bot.send_message(message.from_user.id, 'Вот твое сообщение',
+    bot.send_message(message.from_user.id, 'Я не понимаю, что ты написал, попробуй еще раз.',
                      reply_to_message_id=message.message_id)
 
 
